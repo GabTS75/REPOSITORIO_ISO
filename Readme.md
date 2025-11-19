@@ -1,2 +1,3 @@
-## Repositorio de ISO - Implementación de Sistemas Operativos
-### ASIR - 1er. Curso
+# Repositorio de ISO (ASIR - 1er. Curso)
+
+Implementación de Sistemas Operativos
