@@ -1,14 +1,20 @@
-# Gestión de Discos virtuales en Linux
+# Gestión de Discos Virtuales en Linux
 
-## Creación, Partición, Asignar formato y Montaje
+### Creación, Partición, Asignar formato y Montaje
 
-1.- En la MV (VirtualBox), ehacemos click en la máquina con la que vamos a trabajar, en este caso será un "Ubuntu Server", luego "Configuración" del VirtualBox y finalmente en "Almacenamiento".
-2.- Nos ubicamos sobre el "Controlador:SATA" y le damos al icono de "Add hard disc", para agregar un nuevo disco virtual (que en la realidad es un disco físico).
-3.- En la siguiente ventana le damos click en la parte superior "Crear" y se despliega una ventana en la que vamos a **asignar** un nombre (**Disco1** por ejemplo) y tamaño de disco que para este ejemplo será de **800Mb** y hacemos click en "Terminar".
-4.- En la parte inferior de esa ventana le damos a "Seleccionar" para que ese nuevo disco se agregue a la MV que usaremos (Ubuntu Server).
-5.- Nuevamente en la ventana de "Almacenamiento" podemos ver que ya tenemos asignado el nuevo disco **"Disco1.vdi" (800Mb)**, hacemos click sobre este para ver sus atributos (a la derecha) y finalmente click en "aceptar".
-6.- Ahora en nuestra MV del Ubuntu Server podemos ver claramente que tenemos un nuevo disco en el **Puerto SATA 1:**, también podemos repetir los pasos para "Crear" más discos (paso 3).
-7.- Llegados a este punto, **arrancamos (iniciar) nuestra MV Ubuntu Server**, ingresamos "login y password" y ya en nuestra ventana de comandos (Terminal) iremos ejecutando los siguientes comandos.
+- En la MV (VirtualBox), ehacemos click en la máquina con la que vamos a trabajar, en este caso será un "Ubuntu Server", luego "Configuración" del VirtualBox y finalmente en "Almacenamiento".
+
+- Nos ubicamos sobre el "Controlador:SATA" y le damos al icono de "Add hard disc", para agregar un nuevo disco virtual (que en la realidad es un disco físico).
+
+- En la siguiente ventana le damos click en la parte superior "Crear" y se despliega una ventana en la que vamos a **asignar** un nombre (**Disco1** por ejemplo) y tamaño de disco que para este ejemplo será de **800Mb** y hacemos click en "Terminar".
+
+- En la parte inferior de esa ventana le damos a "Seleccionar" para que ese nuevo disco se agregue a la MV que usaremos (Ubuntu Server).
+
+- Nuevamente en la ventana de "Almacenamiento" podemos ver que ya tenemos asignado el nuevo disco **"Disco1.vdi" (800Mb)**, hacemos click sobre este para ver sus atributos (a la derecha) y finalmente click en "aceptar".
+
+- Ahora en nuestra MV del Ubuntu Server podemos ver claramente que tenemos un nuevo disco en el **Puerto SATA 1:**, también podemos repetir los pasos para "Crear" más discos (paso 3).
+
+- Llegados a este punto, **arrancamos (iniciar) nuestra MV Ubuntu Server**, ingresamos "login y password" y ya en nuestra ventana de comandos (Terminal) iremos ejecutando los siguientes comandos.
 
 ```Bash
 sudo dmesg
@@ -24,7 +30,7 @@ sudo dmesg | grep "sd"
 Ejemplo: tenemos "sda" que es el principal, "sdb" sería el nuevo disco (Disco1.vdi de 800Mb) y así "sdc", "sdd" los siguientes discos que conectemos.
 ```
 
-8.- En la terminal nos muestra información de "sda" y "sdb" que de momento son los únicos que tenemos en la máquina. Ahora pasaremos a darle una **"partición"** a ese **nuevo disco** usando el comando **"fdisk"**.
+- En la terminal nos muestra información de "sda" y "sdb" que de momento son los únicos que tenemos en la máquina. Ahora pasaremos a darle una **"partición"** a ese **nuevo disco** usando el comando **"fdisk"**.
 
 ```Bash
 sudo fdisk -l /dev/sdb
@@ -36,12 +42,14 @@ sudo fdisk /dev/sdb
 # Sin ese parámetro, ahora sí ejecutaremos el "particionado" del disco.
 ```
 
-9.- Vemos que *"se ha realizado la operación en memoria"* y nos pide elegir una "acción", además nos presenta la opción de elegir **"m"** para tener una ayuda y elegir correctamente.
-10.- Luego de presionar "m", vemos en el menú la opción **"n" (add a new partition - adicionar una nueva partición)**.
-11.- Ahora nos pide el **"tipo de partición"**, es decir, si queremos particionar el total del volumen de la unidad o solo una parte (si queremos tener el disco en 2 o más unidades lógicas), para eso utilizaremos la información que obtuvimos anteriormente del disco y haríamos los cálculos necesarios.
-12.- En ésta ocasión vamos a elegir **"p"** (Primary) que viene a ser una **partición primaria**, es decir, usaremos la totalidad del volumen del disco, **precionamos varias veces enter** para que se cojan las opciones por defecto.
-Finalmente debemos elegir la opción **"w"** (write table to disk and exit) para guardar los cambios y salir (**"q"**, para salir sin guardar).
-13.- Hasta este punto hemos conectado el disco, también hemos visto la información necesaria para particionar y realizamos la partición asignando el total del volumen (cuando elegimos **"p"**), ahora vamos a darle el **"formato"** adecuado para poder trabajar en él. Para esto usaremos el comando **"mkfs" (make file system)**.
+- Vemos que *"se ha realizado la operación en memoria"* y nos pide elegir una "acción", además nos presenta la opción de elegir **"m"** para tener una ayuda y elegir correctamente.
+
+- Luego de presionar "m", vemos en el menú la opción **"n" (add a new partition - adicionar una nueva partición)**.
+- Ahora nos pide el **"tipo de partición"**, es decir, si queremos particionar el total del volumen de la unidad o solo una parte (si queremos tener el disco en 2 o más unidades lógicas), para eso utilizaremos la información que obtuvimos anteriormente del disco y haríamos los cálculos necesarios.
+
+- En ésta ocasión vamos a elegir **"p"** (Primary) que viene a ser una **partición primaria**, es decir, usaremos la totalidad del volumen del disco, **precionamos varias veces enter** para que se cojan las opciones por defecto y debemos elegir la opción **"w"** (write table to disk and exit) para guardar los cambios y salir (**"q"**, para salir sin guardar).
+
+- Hasta este punto hemos conectado el disco, también hemos visto la información necesaria para particionar y realizamos la partición asignando el total del volumen (cuando elegimos **"p"**), ahora vamos a darle el **"formato"** adecuado para poder trabajar en él. Para esto usaremos el comando **"mkfs" (make file system)**.
 
 ```Bash
 sudo mkfs
@@ -49,7 +57,7 @@ sudo mkfs
 # Si precionamos la tecla TAB varias veces luego de escribir el comando, veremos sus diferentes opciones de formato, en nuestro caso usaremos el formato "ext4".
 ```
 
-14.- Elegimos la opción **"ext4"** y el comando sería:
+- Elegimos la opción **"ext4"** y el comando sería:
 
 ```Bash
 sudo mkfs.ext4 /dev/sdb1
@@ -57,7 +65,7 @@ sudo mkfs.ext4 /dev/sdb1
 # Este comando inidca que se dará formato a la partición específica "sdb1" (pratición primaria) donde se creará el sistema de archivos.
 ```
 
-15.- Luego de asignar el tipo de formato (sistema de archivos en Linux es **"ext4"**), podemos comprobar utilizando el comando **"blkid"** para que nos muestre más información (mapeo).
+- Luego de asignar el tipo de formato (sistema de archivos en Linux es **"ext4"**), podemos comprobar utilizando el comando **"blkid"** para que nos muestre más información (mapeo).
 
 ```Bash
 sudo blkid
@@ -65,7 +73,7 @@ sudo blkid
 # Este comando da información sobre los discos y sus particiones.
 ```
 
-16.- Ahora que ya conectamos, particionamos y asignamos un formato (sistema de archivos), vamos a **"montar"** el disco, esto sirve para **poder utilizarlo**. Para eso vamos a crear una carpeta primero usando el comando **"mkdir"**.
+- Ahora que ya conectamos, particionamos y asignamos un formato (sistema de archivos), vamos a **"montar"** el disco, esto sirve para **poder utilizarlo**. Para eso vamos a crear una carpeta primero usando el comando **"mkdir"**.
 
 ```Bash
 mkdir nuevodisco
@@ -79,7 +87,7 @@ sudo mount -t auto -v /dev/sdb1 ./nuevodisco
 Resumen: el comando monta la partición /dev/sbd1 en el directorio ./nuevodisco, detectando automáticamente el sistema de archivos y mostrando detalles del proceso.
 ```
 
-17.- Ingresamos en el directorio utilizando el comando **"cd"**.
+- Ingresamos en el directorio utilizando el comando **"cd"**.
 
 ```Bash
 cd nuevodisco
@@ -87,7 +95,7 @@ cd nuevodisco
 # Podemos utilizar el comando "pwd" antes para confirmar que nos encontramos dentro de ese directorio "/home/usuario/nuevodisco".
 ```
 
-18.- Ahora vamos a crear un archivo llamado "documento1" utilizando el comando **"touch"** de la siguiente manera.
+- Ahora vamos a crear un archivo llamado "documento1" utilizando el comando **"touch"** de la siguiente manera.
 
 ```Bash
 touch documento1
@@ -99,7 +107,7 @@ sudo touch documento1
 #Ahora si nos va a permitir hacerlo.
 ```
 
-19.- Finalmente para comprobar que se ha creado el archivo, utilizamos el comando **"ls -la"** para que nos lo muestre en listado.
+- Finalmente para comprobar que se ha creado el archivo, utilizamos el comando **"ls -la"** para que nos lo muestre en listado.
 
 ```Bash
 ls -la
@@ -107,7 +115,7 @@ ls -la
 # Este comando lista el contenido de un directorio.
 ```
 
-Por último tenemos:
+- Por último tenemos:
 
 ```Bash
 id
@@ -121,7 +129,7 @@ history
 # Este comando nos muestra un listado del historial de comandos utilizandos desde el inicio de sesión.
 ```
 
-20.- Ya para terminar podemos **"desmonatar"** el disco, es decir, si queremos **no utilizarlo más** ejecutamos el comando **"umont"**, para nuestro ejercicio sería así:
+- Ya para terminar podemos **"desmonatar"** el disco, es decir, si queremos **no utilizarlo más** ejecutamos el comando **"umont"**, para nuestro ejercicio sería así:
 
 ```Bash
 sudo umount /dev/sdb1
