@@ -1,6 +1,8 @@
 # Gestión de Discos Virtuales en Linux
 
-### Creación, Partición, Asignar formato y Montaje.
+## Creación, Partición, Asignar formato y Montaje (Desmontaje)
+
+### Paso a paso
 
 - En la MV (VirtualBox), ehacemos click en la máquina con la que vamos a trabajar, en este caso será un "Ubuntu Server", luego "Configuración" del VirtualBox y finalmente en "Almacenamiento".
 
@@ -28,7 +30,7 @@ sudo dmesg | grep "sd"
 
 - Cuando agregamos **"| grep "sd"** significa que pasará al comando "grep", indicando que buscamos algo más preciso "sd" que es la información sobre los discos que estén conectados a la máquina.
 
-> Ejemplo: tenemos "sda" que es el principal, "sdb" sería el nuevo disco **(Disco1.vdi de 800Mb)** y así "sdc", "sdd", etc., etc., todos los siguientes discos que conectemos.
+> **Ejemplo:** tenemos "sda" que es el principal, "sdb" sería el nuevo disco **(Disco1.vdi de 800Mb)** y así "sdc", "sdd", etc., etc., todos los siguientes discos que conectemos.
 
 - En la terminal nos muestra información de "sda" y "sdb" que de momento son los únicos que tenemos en la máquina. Ahora pasaremos a darle una **"partición"** a ese **nuevo disco** usando el comando **"fdisk"**.
 
@@ -41,6 +43,7 @@ sudo fdisk -l /dev/sdb
 ```Bash
 sudo fdisk /dev/sdb
 ```
+
 > Sin ese parámetro, ahora sí vamos a ejecutar el "particionado" del disco.
 
 - Vemos que *"se ha realizado la operación en memoria"* y nos pide elegir una "acción", además nos presenta la opción de elegir **"m"** para tener una ayuda y elegir correctamente, precionamos "m".
@@ -99,7 +102,6 @@ cd nuevodisco
 
 - Podemos utilizar el comando "pwd" antes para confirmar que nos encontramos dentro de ese directorio **"/home/usuario/nuevodisco"**.
 
-
 - Ahora vamos a crear un archivo llamado "documento1" utilizando el comando **"touch"** de la siguiente manera.
 
 ```Bash
@@ -111,16 +113,16 @@ touch documento1
 ```Bash
 sudo touch documento1
 ```
-> Ahora si nos va a permitir hacerlo.
 
+> Ahora si nos va a permitir hacerlo.
 
 - Finalmente para comprobar que se ha creado el archivo, utilizamos el comando **"ls -la"** para que nos lo muestre en listado.
 
 ```Bash
 ls -la
-
-# Este comando lista el contenido de un directorio.
 ```
+
+> Este comando lista el contenido de un directorio.
 
 - Por último tenemos:
 
@@ -141,5 +143,5 @@ history
 ```Bash
 sudo umount /dev/sdb1
 ```
-> De esta manera quedaría desmontado.
 
+> De esta manera quedaría desmontado.
